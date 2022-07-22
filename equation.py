@@ -1,4 +1,5 @@
 from math import sqrt
+import maths
 
 class Equation:
     def __init__(self, a, b, c):
@@ -23,10 +24,7 @@ class Equation:
             x2 = (-int(self.b) + sqrt(delta)) / (2 * float(self.a))
             return x1, x2
 
-    def is_negatif(self, nb):
-        return True if nb[0] == '-' else False
-
     def display_equation(self):
         print(f"{self.a}X^2", end = " ")
-        print(f"- {self.b[1:]}X", end = " ") if self.is_negatif(self.b) else print(f"+ {self.b}X", end = " ")
-        print(f"- {self.c[1:]}") if self.is_negatif(self.c) else print(f"+ {self.c}")
+        print(f"- {self.b[1:]}X", end = " ") if maths.is_negatif(self.b) else print(f"+ {self.b}X", end = " ")
+        print(f"- {self.c[1:]}") if maths.is_negatif(self.c) else print(f"+ {self.c}")
