@@ -20,8 +20,8 @@ class Equation:
             return -(float(self.b))/(2*a), None
 
         else:
-            x1 = (-int(self.b) - sqrt(delta)) / (2 * float(self.a))
-            x2 = (-int(self.b) + sqrt(delta)) / (2 * float(self.a))
+            x1 = (-float(self.b) - sqrt(delta)) / (2 * float(self.a))
+            x2 = (-float(self.b) + sqrt(delta)) / (2 * float(self.a))
             return x1, x2
 
     def display_equation(self):
