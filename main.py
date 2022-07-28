@@ -4,12 +4,10 @@ import parse
 import maths
 
 def main():
-    equation = ""
-    print(len(sys.argv))
-    if len(sys.argv) == 3:
-        equation = parse.Parse(sys.argv[3])
-        print(equation.arg)
-        print(equation.reduced_form())
+    parsing = ""
+    equat = ""
+    if len(sys.argv) == 2:
+        parsing = parse.Parse(sys.argv[1]).parsing_equation()
     else:
         print("Error: Need an argument")
 
