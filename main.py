@@ -2,12 +2,41 @@ import sys
 import equation
 import parse
 import maths
+import re
 
+# todo handle power negatif and float
+
+def table_arg(side_equation):
+    index_tokens = []
+    i = 0
+    for element in side_equation:
+        if element.find("X^") != -1:
+            if re.match("\+|-", side_equation[i - 3]):
+                side_equation[i - 2] = side_equation[i - 3] + side_equation[i - 2]
+            if len(index_tokens) > int(element[-1]):
+                index_tokens[float(element[-1])] += float(side_equation[i - 2])
+            else:
+                while len(index_tokens) < float(element[-1]):
+                    index_tokens.insert(len(index_tokens) - 1, 0)
+                index_tokens.insert(float(element[-1]), float(side_equation[i - 2]))
+        i += 1
+    print(index_tokens)
+
+def parsing_argv(arg):
+    res = arg.split(" = ")
+    lequation = re.split(" ", res[0])
+    requation = re.split(" ", res[1])
+    print(lequation, requation)
+    lequation = table_arg(lequation)
+    requation = table_arg(requation)
+    
 def main():
     parsing = ""
     equat = ""
     if len(sys.argv) == 2:
-        parsing = parse.Parse(sys.argv[1]).parsing_equation()
+        print(sys.argv[1])
+        parsing_argv(sys.argv[1])
+        # parsing = parse.Parse(sys.argv[1]).parsing_equation()
     else:
         print("Error: Need an argument")
 
