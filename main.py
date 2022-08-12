@@ -1,9 +1,10 @@
+from math import sqrt
 import sys
 import re
-from math import sqrt
 
 # todo handle X^-1 / X^1.2
 # todo sqrt function
+# todo handle a = 0
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -12,9 +13,9 @@ def swap_equation(lequation, requation):
     return(lequation, requation)
 
 def print_equation(equation):
-    i = len(equation) - 1
+    i = get_degree(equation)
     while(i >= 0):
-        if i < len(equation) - 1 and equation[i] > 0:
+        if i < get_degree(equation) and equation[i] > 0:
             print("+", end = " ")
         elif equation[i] < 0:
             print("-", end = " ")
@@ -57,11 +58,14 @@ def parsing_arg(arg):
     equation = reduced_form(lequation, requation)
     return (equation)
 
-def print_degree(equation):
-    print(f"Polynomial degree: {len(equation) - 1}")
-    if len(equation) > 3:
-        print("The polynomial degree is stricly greater than 2, I can't solve.")
-    return(len(equation) - 1)
+def get_degree(equation):
+    i = len(equation) - 1
+    while i >= 0:
+        if equation[i] == 0:
+            i -= 1
+        else:
+            return(i)
+    return(0)
 
 def calc_delta(equation):
     return(equation[1] ** 2 - 4 * equation[2] * equation[0])
@@ -83,15 +87,19 @@ def second_degree(equation):
             print("Discriminant is negatif. No solution.")
 
 def solve_equation(equation):
-    degree = len(equation) - 1
+    degree = get_degree(equation)
+    print(f"Polynomial degree: {degree}")
+    if len(equation) > 3:
+        print("The polynomial degree is stricly greater than 2, I can't solve.")
     if degree == 2:
         second_degree(equation)
+    # if degree == 1:
 
 def main():
     equation = []
     if len(sys.argv) == 2:
         equation = parsing_arg(sys.argv[1])
-        if print_degree(equation) <= 2:
+        if get_degree(equation) <= 2:
             solve_equation(equation)
     else:
         print("Error: Need one argument")
