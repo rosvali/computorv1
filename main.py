@@ -19,15 +19,27 @@ def print_equation(equation):
             print("+", end = " ")
         elif equation[i] < 0:
             print("-", end = " ")
-        print(f"{abs(equation[i])} * X^{i}", end = " ")
+        if not equation[i] == 0:
+            coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
+            print(f"{abs(coeff)} * X^{i}", end = " ")
+        if get_degree(equation) == 0 and equation[0] == 0:
+            print("0", end = " ")
         i -= 1
+
+def print_solution(solution):
+    if solution == 0:
+        print(abs(int(solution)))
+    elif solution.is_integer():
+        print(int(solution))
+    else:
+        print(solution)
 
 def reduced_form(lequation, requation):
     i = 0
     if len(lequation) < len(requation):
         lequation, requation = swap_equation(lequation, requation)
     for coeff in requation:
-        lequation[i] += coeff
+        lequation[i] += -coeff
         requation[i] = 0
         i += 1
     print("Reduced form:", end = " ")
@@ -77,12 +89,12 @@ def second_degree(equation):
             print("Discriminant is strictly positive, the two solutions are:")
             x1 = (-equation[1] - sqrt(delta)) / (2 * equation[2])
             x2 = (-equation[1] + sqrt(delta)) / (2 * equation[2])
-            print(x1)
-            print(x2)
+            print_solution(x1)
+            print_solution(x2)
         elif delta == 0:
             print("Discriminant is nul, the solution is:")
             x1 = -equation[1]/(2*equation[2])
-            print(x1)
+            print_solution(x1)
         else:
             print("Discriminant is negatif. No solution.")
 
@@ -93,7 +105,12 @@ def solve_equation(equation):
         print("The polynomial degree is stricly greater than 2, I can't solve.")
     if degree == 2:
         second_degree(equation)
-    # if degree == 1:
+    if degree == 1:
+        x1 = -equation[0] / equation[1]
+        print("The solution is:")
+        print_solution(x1)
+    if degree == 0:
+        print("All numbers are solution.")
 
 def main():
     equation = []
