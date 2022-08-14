@@ -4,7 +4,7 @@ import re
 
 # todo handle X^-1 / X^1.2
 # todo sqrt function
-# todo handle a = 0
+# todo print natural equation
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -51,22 +51,33 @@ def table_arg(side_equation):
     index_tokens = []
     i = 0
     for element in side_equation:
-        if element.find("X^") != -1:
-            if re.match("\+|-", side_equation[i - 3]):
-                side_equation[i - 2] = side_equation[i - 3] + side_equation[i - 2]
-            if len(index_tokens) > int(element[-1]):
-                index_tokens[int(element[-1])] += float(side_equation[i - 2])
+        element = element.replace(" ", "")
+        if not element == "+" and not element == "-" and not len(element) == 0:
+            element = element.split("*")
+            if len(element) > 1:
+                if element[1].lower() == 'x':
+                    power = 1
+                else:
+                    power = element[1].lower().lstrip("x^")
             else:
-                while len(index_tokens) < float(element[-1]):
+                power = 0
+            if side_equation[i - 1] == "+" or side_equation[i - 1] == "-":
+                coeff = side_equation[i - 1] + element[0]
+            else:
+                coeff = element[0]
+            if len(index_tokens) - 1 >= int(power):
+                index_tokens[int(power)] += float(coeff)
+            else:
+                while len(index_tokens) < int(power):
                     index_tokens.insert(len(index_tokens) - 1, 0)
-                index_tokens.insert(int(element[-1]), float(side_equation[i - 2]))
+                index_tokens.insert(int(power), float(coeff))
         i += 1
     return(index_tokens)
 
 def parsing_arg(arg):
-    res = arg.split(" = ")
-    lequation = table_arg(re.split(" ", res[0]))
-    requation = table_arg(re.split(" ", res[1]))
+    res = arg.split("=")
+    lequation = table_arg(re.split("(\+|-)", res[0]))
+    requation = table_arg(re.split("(\+|-)", res[1]))
     equation = reduced_form(lequation, requation)
     return (equation)
 
