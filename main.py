@@ -2,9 +2,7 @@ from math import sqrt
 import sys
 import re
 
-# todo handle X^-1 / X^1.2
 # todo sqrt function
-# todo print natural equation
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -18,10 +16,15 @@ def print_equation(equation):
         if i < get_degree(equation) and equation[i] > 0:
             print("+", end = " ")
         elif equation[i] < 0:
-            print("-", end = " ")
+            print("-", end = "") if i == get_degree(equation) else print("-", end = " ")
         if not equation[i] == 0:
             coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
-            print(f"{abs(coeff)} * X^{i}", end = " ")
+            if i > 1:
+                print(f"{abs(coeff)} * X^{i}", end = " ")
+            elif i == 1:
+                print(f"{abs(coeff)} * X", end = " ")
+            elif i == 0:
+                print(f"{abs(coeff)}", end = " ")
         if get_degree(equation) == 0 and equation[0] == 0:
             print("0", end = " ")
         i -= 1
@@ -52,6 +55,8 @@ def table_arg(side_equation):
     i = 0
     for element in side_equation:
         element = element.replace(" ", "")
+        if element == "":
+            exit()
         if not element == "+" and not element == "-" and not len(element) == 0:
             element = element.split("*")
             if len(element) > 1:
@@ -75,11 +80,24 @@ def table_arg(side_equation):
     return(index_tokens)
 
 def parsing_arg(arg):
-    res = arg.split("=")
-    lequation = table_arg(re.split("(\+|-)", res[0]))
-    requation = table_arg(re.split("(\+|-)", res[1]))
-    equation = reduced_form(lequation, requation)
-    return (equation)
+    parser = "([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*"
+    try:
+        res = arg.split("=")
+        if len(res) != 2:
+            exit()
+        if re.match(parser, res[0]).group() == res[0] or re.match(parser, res[1]).group() == res[1]:
+            # lequation = re.split("(\+|-)", res[0])
+            # requation = re.split("(\+|-)", res[1])
+            # print(lequation, requation)
+            lequation = table_arg(re.split("(\+|-)", res[0]))
+            requation = table_arg(re.split("(\+|-)", res[1]))
+        else:
+            exit()
+        equation = reduced_form(lequation, requation)
+        return (equation)
+    except:
+        print("Error: Parsing error, please review your equation.")
+        exit()
 
 def get_degree(equation):
     i = len(equation) - 1
@@ -91,7 +109,7 @@ def get_degree(equation):
     return(0)
 
 def calc_delta(equation):
-    return(equation[1] ** 2 - 4 * equation[2] * equation[0])
+    return(equation[1] * equation[1] - 4 * equation[2] * equation[0])
 
 def second_degree(equation):
     if len(equation) - 1 == 2:
@@ -127,8 +145,7 @@ def main():
     equation = []
     if len(sys.argv) == 2:
         equation = parsing_arg(sys.argv[1])
-        if get_degree(equation) <= 2:
-            solve_equation(equation)
+        solve_equation(equation)
     else:
         print("Error: Need one argument")
 
