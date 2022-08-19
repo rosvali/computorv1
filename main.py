@@ -3,6 +3,7 @@ import sys
 import re
 
 # todo sqrt function
+# todo bonus fraction
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -86,9 +87,6 @@ def parsing_arg(arg):
         if len(res) != 2:
             exit()
         if re.match(parser, res[0]).group() == res[0] or re.match(parser, res[1]).group() == res[1]:
-            # lequation = re.split("(\+|-)", res[0])
-            # requation = re.split("(\+|-)", res[1])
-            # print(lequation, requation)
             lequation = table_arg(re.split("(\+|-)", res[0]))
             requation = table_arg(re.split("(\+|-)", res[1]))
         else:
@@ -118,7 +116,9 @@ def second_degree(equation):
             print("Discriminant is strictly positive, the two solutions are:")
             x1 = (-equation[1] - sqrt(delta)) / (2 * equation[2])
             x2 = (-equation[1] + sqrt(delta)) / (2 * equation[2])
+            print(f"x1 = (-{equation[1]} - √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x1)
+            print(f"x2 = (-{equation[1]} + √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x2)
         elif delta == 0:
             print("Discriminant is nul, the solution is:")
@@ -137,6 +137,7 @@ def solve_equation(equation):
     if degree == 1:
         x1 = -equation[0] / equation[1]
         print("The solution is:")
+        print(f"x1 = -{equation[0]} / {equation[1]} =", end = " ")
         print_solution(x1)
     if degree == 0:
         print("All numbers are solution.")
