@@ -40,19 +40,25 @@ def print_solution(solution):
 
 def reduced_form(lequation, requation):
     i = 0
+    # print(requation)
+    # print_equation(lequation)
+    # print("=", end = " ")
+    # print_equation(requation)
     if len(lequation) < len(requation):
         lequation, requation = swap_equation(lequation, requation)
     for coeff in requation:
         lequation[i] += -coeff
         requation[i] = 0
+        if i > 0:
+            print_equation(lequation)
         i += 1
     print("Reduced form:", end = " ")
     print_equation(lequation)
     print("= 0")
     return(lequation)
 
-def table_arg(side_equation):
-    index_tokens = []
+def list_equation(side_equation):
+    index_coeff = []
     i = 0
     for element in side_equation:
         element = element.replace(" ", "")
@@ -71,30 +77,32 @@ def table_arg(side_equation):
                 coeff = side_equation[i - 1] + element[0]
             else:
                 coeff = element[0]
-            if len(index_tokens) - 1 >= int(power):
-                index_tokens[int(power)] += float(coeff)
+            if len(index_coeff) - 1 >= int(power):
+                index_coeff[int(power)] += float(coeff)
             else:
-                while len(index_tokens) < int(power):
-                    index_tokens.insert(len(index_tokens) - 1, 0)
-                index_tokens.insert(int(power), float(coeff))
+                while len(index_coeff) < int(power):
+                    index_coeff.insert(len(index_coeff) - 1, 0)
+                index_coeff.insert(int(power), float(coeff))
         i += 1
-    return(index_tokens)
+    return(index_coeff)
 
 def parsing_arg(arg):
-    parser = "([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*"
+    parser = "(([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*)*"
     try:
         res = arg.split("=")
         if len(res) != 2:
+            print("Error: need one =")
             exit()
-        if re.match(parser, res[0]).group() == res[0] or re.match(parser, res[1]).group() == res[1]:
-            lequation = table_arg(re.split("(\+|-)", res[0]))
-            requation = table_arg(re.split("(\+|-)", res[1]))
+        if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
+            lequation = list_equation(re.split("(\+|-)", res[0]))
+            requation = list_equation(re.split("(\+|-)", res[1]))
+            equation = reduced_form(lequation, requation)
+            return (equation)
         else:
+            print("Error: check your signs")
             exit()
-        equation = reduced_form(lequation, requation)
-        return (equation)
     except:
-        print("Error: Parsing error, please review your equation.")
+        print("Parsing error: please review your equation.")
         exit()
 
 def get_degree(equation):
@@ -137,7 +145,7 @@ def solve_equation(equation):
     if degree == 1:
         x1 = -equation[0] / equation[1]
         print("The solution is:")
-        print(f"x1 = -{equation[0]} / {equation[1]} =", end = " ")
+        print(f"x1 = -({equation[0]}) / {equation[1]} =", end = " ")
         print_solution(x1)
     if degree == 0:
         print("All numbers are solution.")
