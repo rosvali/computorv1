@@ -109,7 +109,6 @@ def parsing_arg(arg):
             equation = reduced_form(lequation, requation)
             return (equation)
         else:
-            print("Error: check your signs")
             exit()
     except:
         print("Parsing error: please review your equation.")
@@ -145,6 +144,7 @@ def second_degree(equation):
         elif delta == 0:
             print("\nDiscriminant is nul, the solution is:")
             x1 = -equation[1]/(2*equation[2])
+            print(f"x1 = -({equation[1]}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x1)
         else:
             print("\nDiscriminant is negatif. No solution.")
@@ -154,12 +154,12 @@ def solve_equation(equation):
     if degree >= 1:
         print(f"\nPolynomial degree: {degree}")
     if len(equation) > 3:
-        print("The polynomial degree is stricly greater than 2, I can't solve.")
+        print("\nThe polynomial degree is stricly greater than 2, I can't solve.")
     if degree == 2:
         second_degree(equation)
     if degree == 1:
         x1 = -equation[0] / equation[1]
-        print("The solution is:")
+        print("\nThe solution is:")
         print(f"x1 = -({equation[0]}) / {equation[1]} =", end = " ")
         print_solution(x1)
     if degree == 0:
