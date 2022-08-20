@@ -1,9 +1,14 @@
-from math import sqrt
 import sys
 import re
 
-# todo sqrt function
 # todo bonus fraction
+# print more step
+
+def mysqrt(nb):
+    i = 1
+    while i * i < nb:
+        i = (i + nb/i) * 0.5 
+    return(i)
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -49,8 +54,8 @@ def reduced_form(lequation, requation):
     for coeff in requation:
         lequation[i] += -coeff
         requation[i] = 0
-        if i > 0:
-            print_equation(lequation)
+        # if i > 0:
+            # print_equation(lequation)
         i += 1
     print("Reduced form:", end = " ")
     print_equation(lequation)
@@ -66,6 +71,8 @@ def list_equation(side_equation):
             exit()
         if not element == "+" and not element == "-" and not len(element) == 0:
             element = element.split("*")
+            if len(element) > 2:
+                exit()
             if len(element) > 1:
                 if element[1].lower() == 'x':
                     power = 1
@@ -122,8 +129,8 @@ def second_degree(equation):
         delta = calc_delta(equation)
         if delta > 0:
             print("Discriminant is strictly positive, the two solutions are:")
-            x1 = (-equation[1] - sqrt(delta)) / (2 * equation[2])
-            x2 = (-equation[1] + sqrt(delta)) / (2 * equation[2])
+            x1 = (-equation[1] - mysqrt(delta)) / (2 * equation[2])
+            x2 = (-equation[1] + mysqrt(delta)) / (2 * equation[2])
             print(f"x1 = (-{equation[1]} - √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x1)
             print(f"x2 = (-{equation[1]} + √{delta}) / (2 * {equation[2]}) =", end = " ")
@@ -137,7 +144,8 @@ def second_degree(equation):
 
 def solve_equation(equation):
     degree = get_degree(equation)
-    print(f"Polynomial degree: {degree}")
+    if degree >= 1:
+        print(f"Polynomial degree: {degree}")
     if len(equation) > 3:
         print("The polynomial degree is stricly greater than 2, I can't solve.")
     if degree == 2:
@@ -148,7 +156,7 @@ def solve_equation(equation):
         print(f"x1 = -({equation[0]}) / {equation[1]} =", end = " ")
         print_solution(x1)
     if degree == 0:
-        print("All numbers are solution.")
+        print("All numbers are solution.") if equation[0] == 0 else print("t can't solve.")
 
 def main():
     equation = []
