@@ -45,21 +45,24 @@ def print_solution(solution):
 
 def reduced_form(lequation, requation):
     i = 0
-    # print(requation)
-    # print_equation(lequation)
-    # print("=", end = " ")
-    # print_equation(requation)
     if len(lequation) < len(requation):
         lequation, requation = swap_equation(lequation, requation)
+    print("<=>", end = " ")
+    print_equation(lequation)
+    print("=", end = " ")
+    print_equation(requation)
     for coeff in requation:
         lequation[i] += -coeff
         requation[i] = 0
-        # if i > 0:
-            # print_equation(lequation)
+        if len(requation) > 1:
+            print("\n<=>", end = " ")
+            print_equation(lequation)
+            print("=", end = " ")
+            print_equation(requation)
         i += 1
-    print("Reduced form:", end = " ")
+    print("\nReduced form:", end = " ")
     print_equation(lequation)
-    print("= 0")
+    print("= 0\n")
     return(lequation)
 
 def list_equation(side_equation):
