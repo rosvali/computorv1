@@ -62,7 +62,7 @@ def reduced_form(lequation, requation):
         i += 1
     print("\nReduced form:", end = " ")
     print_equation(lequation)
-    print("= 0\n")
+    print("= 0")
     return(lequation)
 
 def list_equation(side_equation):
@@ -70,7 +70,7 @@ def list_equation(side_equation):
     i = 0
     for element in side_equation:
         element = element.replace(" ", "")
-        if element == "":
+        if element == "" and i != 0:
             exit()
         if not element == "+" and not element == "-" and not len(element) == 0:
             element = element.split("*")
@@ -97,7 +97,7 @@ def list_equation(side_equation):
     return(index_coeff)
 
 def parsing_arg(arg):
-    parser = "(([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*)*"
+    parser = r"(([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*)*"
     try:
         res = arg.split("=")
         if len(res) != 2:
@@ -125,13 +125,17 @@ def get_degree(equation):
     return(0)
 
 def calc_delta(equation):
-    return(equation[1] * equation[1] - 4 * equation[2] * equation[0])
+    delta = equation[1] * equation[1] - 4 * equation[2] * equation[0]
+    print("\n∆ = b^2-4ac")
+    print(f"∆ = {equation[1]}^2 - 4 * {equation[2]} * {equation[0]}")
+    print(f"∆ = {delta}")
+    return(delta)
 
 def second_degree(equation):
     if len(equation) - 1 == 2:
         delta = calc_delta(equation)
         if delta > 0:
-            print("Discriminant is strictly positive, the two solutions are:")
+            print("\nDiscriminant is strictly positive, the two solutions are:")
             x1 = (-equation[1] - mysqrt(delta)) / (2 * equation[2])
             x2 = (-equation[1] + mysqrt(delta)) / (2 * equation[2])
             print(f"x1 = (-{equation[1]} - √{delta}) / (2 * {equation[2]}) =", end = " ")
@@ -139,16 +143,16 @@ def second_degree(equation):
             print(f"x2 = (-{equation[1]} + √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x2)
         elif delta == 0:
-            print("Discriminant is nul, the solution is:")
+            print("\nDiscriminant is nul, the solution is:")
             x1 = -equation[1]/(2*equation[2])
             print_solution(x1)
         else:
-            print("Discriminant is negatif. No solution.")
+            print("\nDiscriminant is negatif. No solution.")
 
 def solve_equation(equation):
     degree = get_degree(equation)
     if degree >= 1:
-        print(f"Polynomial degree: {degree}")
+        print(f"\nPolynomial degree: {degree}")
     if len(equation) > 3:
         print("The polynomial degree is stricly greater than 2, I can't solve.")
     if degree == 2:
@@ -159,7 +163,7 @@ def solve_equation(equation):
         print(f"x1 = -({equation[0]}) / {equation[1]} =", end = " ")
         print_solution(x1)
     if degree == 0:
-        print("All numbers are solution.") if equation[0] == 0 else print("t can't solve.")
+        print("All numbers are solution.") if equation[0] == 0 else print("It can't solve.")
 
 def main():
     equation = []
