@@ -2,7 +2,28 @@ import sys
 import re
 
 # todo bonus fraction
-# print more step
+# - handle decimal periodique
+
+def fraction(dec):
+    num = int(str(dec).split(".")[1])
+    denom = int("1" + (len(str(num))) * "0")
+    rest = int(str(dec).split(".")[0])
+    div = num
+
+    if denom > 1000:
+        print(dec)
+        return()
+    while (div > 0):
+        if (num % div == 0 and denom % div == 0):
+            break
+        div -= 1
+    print(f"{int((num + rest * denom) / div)}/{int(denom / div)}")
+
+def myabs(nb):
+    if nb < 0:
+        return(-nb)
+    else:
+        return(nb)
 
 def mysqrt(nb):
     i = 1
@@ -26,22 +47,22 @@ def print_equation(equation):
         if not equation[i] == 0:
             coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
             if i > 1:
-                print(f"{abs(coeff)} * X^{i}", end = " ")
+                print(f"{myabs(coeff)} * X^{i}", end = " ")
             elif i == 1:
-                print(f"{abs(coeff)} * X", end = " ")
+                print(f"{myabs(coeff)} * X", end = " ")
             elif i == 0:
-                print(f"{abs(coeff)}", end = " ")
+                print(f"{myabs(coeff)}", end = " ")
         if get_degree(equation) == 0 and equation[0] == 0:
             print("0", end = " ")
         i -= 1
 
 def print_solution(solution):
     if solution == 0:
-        print(abs(int(solution)))
+        print(myabs(int(solution)))
     elif solution.is_integer():
         print(int(solution))
     else:
-        print(solution)
+        fraction(solution)
 
 def reduced_form(lequation, requation):
     i = 0
@@ -174,6 +195,7 @@ def main():
         print("Error: Need one argument")
 
 main()
+fraction(1/3)
 
 # 2 * X^2 + 8 * X^1 + 8 * X^0 = 0 <== delta = 0
 # 5 * X^2 - 2 * X^1 + 1 * X^0 = 0 <== delta < 0
