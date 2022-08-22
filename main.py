@@ -25,8 +25,8 @@ def print_equation(equation):
             print("+", end = " ")
         elif equation[i] < 0:
             print("-", end = "") if i == get_degree(equation) else print("-", end = " ")
+        coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
         if not equation[i] == 0 and myabs(equation[i]) != 1:
-            coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
             if i > 1:
                 print(f"{myabs(coeff)} * X^{i}", end = " ")
             elif i == 1:
@@ -110,21 +110,21 @@ def list_equation(side_equation):
 
 def parsing_arg(arg):
     parser = r"(([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*)*"
-    try:
-        res = arg.split("=")
-        if len(res) != 2:
-            print("Error: need one =")
-            exit()
-        if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
-            lequation = list_equation(re.split("(\+|-)", res[0]))
-            requation = list_equation(re.split("(\+|-)", res[1]))
-            equation = reduced_form(lequation, requation)
-            return (equation)
-        else:
-            exit()
-    except:
-        print("Parsing error: please review your equation.")
+    # try:
+    res = arg.split("=")
+    if len(res) != 2:
+        print("Error: need one =")
         exit()
+    if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
+        lequation = list_equation(re.split("(\+|-)", res[0]))
+        requation = list_equation(re.split("(\+|-)", res[1]))
+        equation = reduced_form(lequation, requation)
+        return (equation)
+    else:
+        exit()
+# except:
+    print("Parsing error: please review your equation.")
+    exit()
 
 def get_degree(equation):
     i = len(equation) - 1
