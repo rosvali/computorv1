@@ -10,12 +10,12 @@ def myabs(nb):
         return(nb)
 
 def mysqrt(nb):
-    i = 0
-    while i * i < nb:
-        i += 1
-    if i * i == nb:
-        return(i)
-    return(0)
+    # i = 0
+    # while i * i < nb:
+        # i += 1
+    # if i * i == nb:
+        # return(i)
+    return(nb ** 0.5)
 
 def swap_equation(lequation, requation):
     tmp = lequation
