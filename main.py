@@ -1,23 +1,7 @@
 import sys
 import re
 
-# todo bonus fraction
-# - handle decimal periodique
-
-def fraction(dec):
-    num = int(str(dec).split(".")[1])
-    denom = int("1" + (len(str(num))) * "0")
-    rest = int(str(dec).split(".")[0])
-    div = num
-
-    if denom > 1000:
-        print(dec)
-        return()
-    while (div > 0):
-        if (num % div == 0 and denom % div == 0):
-            break
-        div -= 1
-    print(f"{int((num + rest * denom) / div)}/{int(denom / div)}")
+# fix mysqrt
 
 def myabs(nb):
     if nb < 0:
@@ -26,10 +10,12 @@ def myabs(nb):
         return(nb)
 
 def mysqrt(nb):
-    i = 1
+    i = 0
     while i * i < nb:
-        i = (i + nb/i) * 0.5 
-    return(i)
+        i += 1
+    if i * i == nb:
+        return(i)
+    return(0)
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -44,12 +30,19 @@ def print_equation(equation):
             print("+", end = " ")
         elif equation[i] < 0:
             print("-", end = "") if i == get_degree(equation) else print("-", end = " ")
-        if not equation[i] == 0:
+        if not equation[i] == 0 and myabs(equation[i]) != 1:
             coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
             if i > 1:
                 print(f"{myabs(coeff)} * X^{i}", end = " ")
             elif i == 1:
                 print(f"{myabs(coeff)} * X", end = " ")
+            elif i == 0:
+                print(f"{myabs(coeff)}", end = " ")
+        elif myabs(equation[i]) == 1:
+            if i > 1:
+                print(f"X^{i}", end = " ")
+            elif i == 1:
+                print(f"X", end = " ")
             elif i == 0:
                 print(f"{myabs(coeff)}", end = " ")
         if get_degree(equation) == 0 and equation[0] == 0:
@@ -62,7 +55,7 @@ def print_solution(solution):
     elif solution.is_integer():
         print(int(solution))
     else:
-        fraction(solution)
+        print(solution)
 
 def reduced_form(lequation, requation):
     i = 0
@@ -97,6 +90,8 @@ def list_equation(side_equation):
             element = element.split("*")
             if len(element) > 2:
                 exit()
+            elif len(element) == 1 and element[0].lower().startswith("x"):
+                element.insert(0, "1")
             if len(element) > 1:
                 if element[1].lower() == 'x':
                     power = 1
@@ -104,6 +99,7 @@ def list_equation(side_equation):
                     power = element[1].lower().lstrip("x^")
             else:
                 power = 0
+            # print(coeff, power)
             if side_equation[i - 1] == "+" or side_equation[i - 1] == "-":
                 coeff = side_equation[i - 1] + element[0]
             else:
@@ -158,9 +154,9 @@ def second_degree(equation):
             print("\nDiscriminant is strictly positive, the two solutions are:")
             x1 = (-equation[1] - mysqrt(delta)) / (2 * equation[2])
             x2 = (-equation[1] + mysqrt(delta)) / (2 * equation[2])
-            print(f"x1 = (-{equation[1]} - √{delta}) / (2 * {equation[2]}) =", end = " ")
+            print(f"x1 = (-({equation[1]}) - √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x1)
-            print(f"x2 = (-{equation[1]} + √{delta}) / (2 * {equation[2]}) =", end = " ")
+            print(f"x2 = (-({equation[1]}) + √{delta}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x2)
         elif delta == 0:
             print("\nDiscriminant is nul, the solution is:")
@@ -195,7 +191,7 @@ def main():
         print("Error: Need one argument")
 
 main()
-fraction(1/3)
+print(mysqrt(21))
 
 # 2 * X^2 + 8 * X^1 + 8 * X^0 = 0 <== delta = 0
 # 5 * X^2 - 2 * X^1 + 1 * X^0 = 0 <== delta < 0
