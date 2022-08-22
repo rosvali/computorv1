@@ -25,7 +25,8 @@ def print_equation(equation):
             print("+", end = " ")
         elif equation[i] < 0:
             print("-", end = "") if i == get_degree(equation) else print("-", end = " ")
-        coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
+        if not equation[i] == 0:
+            coeff = int(equation[i]) if equation[i].is_integer() else equation[i]
         if not equation[i] == 0 and myabs(equation[i]) != 1:
             if i > 1:
                 print(f"{myabs(coeff)} * X^{i}", end = " ")
