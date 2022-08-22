@@ -10,12 +10,7 @@ def myabs(nb):
         return(nb)
 
 def mysqrt(nb):
-    # i = 0
-    # while i * i < nb:
-        # i += 1
-    # if i * i == nb:
-        # return(i)
-    return(nb ** 0.5)
+    return(float(nb ** 0.5))
 
 def swap_equation(lequation, requation):
     tmp = lequation
@@ -191,7 +186,6 @@ def main():
         print("Error: Need one argument")
 
 main()
-print(mysqrt(21))
 
 # 2 * X^2 + 8 * X^1 + 8 * X^0 = 0 <== delta = 0
 # 5 * X^2 - 2 * X^1 + 1 * X^0 = 0 <== delta < 0
