@@ -114,8 +114,8 @@ def parsing_arg(arg):
         if len(res) != 2:
             exit()
         if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
-            lequation = list_equation(re.split("(\+|-)", res[0]))
-            requation = list_equation(re.split("(\+|-)", res[1]))
+            lequation = list_equation(re.split(r"(\+|-)", res[0]))
+            requation = list_equation(re.split(r"(\+|-)", res[1]))
             equation = reduced_form(lequation, requation)
             return (equation)
         else:
