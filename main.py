@@ -1,8 +1,6 @@
 import sys
 import re
 
-# fix mysqrt
-
 def myabs(nb):
     if nb < 0:
         return(-nb)
@@ -111,21 +109,20 @@ def list_equation(side_equation):
 
 def parsing_arg(arg):
     parser = r"(([-+=]?)\s*([0-9\.]+)?(\s*\*?\s*[xX](?:\s*\^\s*([0-9]+))?)?\s*)*"
-    # try:
-    res = arg.split("=")
-    if len(res) != 2:
-        print("Error: need one =")
+    try:
+        res = arg.split("=")
+        if len(res) != 2:
+            exit()
+        if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
+            lequation = list_equation(re.split("(\+|-)", res[0]))
+            requation = list_equation(re.split("(\+|-)", res[1]))
+            equation = reduced_form(lequation, requation)
+            return (equation)
+        else:
+            exit()
+    except:
+        print("Parsing error: please review your equation.")
         exit()
-    if re.match(parser, res[0]).group() == res[0] and re.match(parser, res[1]).group() == res[1]:
-        lequation = list_equation(re.split("(\+|-)", res[0]))
-        requation = list_equation(re.split("(\+|-)", res[1]))
-        equation = reduced_form(lequation, requation)
-        return (equation)
-    else:
-        exit()
-# except:
-    print("Parsing error: please review your equation.")
-    exit()
 
 def get_degree(equation):
     i = len(equation) - 1
@@ -187,7 +184,3 @@ def main():
         print("Error: Need one argument")
 
 main()
-
-# 2 * X^2 + 8 * X^1 + 8 * X^0 = 0 <== delta = 0
-# 5 * X^2 - 2 * X^1 + 1 * X^0 = 0 <== delta < 0
-# 9 * X^2 - 5 * X^1 + 2 * X^0 = 0 <== delta > 0
