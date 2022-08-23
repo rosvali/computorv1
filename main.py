@@ -157,7 +157,17 @@ def second_degree(equation):
             print(f"x1 = -({equation[1]}) / (2 * {equation[2]}) =", end = " ")
             print_solution(x1)
         else:
-            print("\nDiscriminant is negatif. No solution.")
+            print("\nDiscriminant is negatif, the two complexes solutions are:")
+            num = -equation[1]
+            denom = 2 * equation[2]
+            print(f"x1 = (-({equation[1]}) - i√{myabs(delta)}) / (2 * {equation[2]})")
+            print(f"x2 = (-({equation[1]}) + i√{myabs(delta)}) / (2 * {equation[2]})")
+            if num != 0:
+                print(f"x1 = {num} - i√{myabs(delta)} / {denom}")
+                print(f"x1 = {num} + i√{myabs(delta)} / {denom}")
+            else:
+                print(f"x1 = -i√{myabs(delta)} / {denom}")
+                print(f"x1 = i√{myabs(delta)} / {denom}")
 
 def solve_equation(equation):
     degree = get_degree(equation)
