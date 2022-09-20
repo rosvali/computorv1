@@ -10,6 +10,27 @@ def myabs(nb):
 def mysqrt(nb):
     return(float(nb ** 0.5))
 
+def fraction(dec):
+    num = int(str(dec).split(".")[1])
+    denom = int("1" + (len(str(num))) * "0")
+    rest = int(str(dec).split(".")[0])
+    div = num
+
+    if denom > 1000:
+        print(dec)
+        return()
+    while (div > 0):
+        if (num % div == 0 and denom % div == 0):
+            break
+        div -= 1
+    print(f"{int((num + rest * denom) / div)}/{int(denom / div)}")
+
+def myabs(nb):
+    if nb < 0:
+        return(-nb)
+    else:
+        return(nb)
+
 def swap_equation(lequation, requation):
     tmp = lequation
     lequation = requation
@@ -49,7 +70,7 @@ def print_solution(solution):
     elif solution.is_integer():
         print(int(solution))
     else:
-        print(solution)
+        fraction(solution)
 
 def reduced_form(lequation, requation):
     i = 0
@@ -93,7 +114,6 @@ def list_equation(side_equation):
                     power = element[1].lower().lstrip("x^")
             else:
                 power = 0
-            # print(coeff, power)
             if side_equation[i - 1] == "+" or side_equation[i - 1] == "-":
                 coeff = side_equation[i - 1] + element[0]
             else:
@@ -163,8 +183,8 @@ def second_degree(equation):
             print(f"x1 = (-({equation[1]}) - i√{myabs(delta)}) / (2 * {equation[2]})")
             print(f"x2 = (-({equation[1]}) + i√{myabs(delta)}) / (2 * {equation[2]})")
             if num != 0:
-                print(f"x1 = {num} - i√{myabs(delta)} / {denom}")
-                print(f"x1 = {num} + i√{myabs(delta)} / {denom}")
+                print(f"x1 = ({num} - i√{myabs(delta)}) / {denom}")
+                print(f"x1 = ({num} + i√{myabs(delta)}) / {denom}")
             else:
                 print(f"x1 = -i√{myabs(delta)} / {denom}")
                 print(f"x1 = i√{myabs(delta)} / {denom}")
