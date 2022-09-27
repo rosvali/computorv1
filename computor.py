@@ -1,12 +1,6 @@
 import sys
 import re
 
-def myabs(nb):
-    if nb < 0:
-        return(-nb)
-    else:
-        return(nb)
-
 def mysqrt(nb):
     return(float(nb ** 0.5))
 
@@ -213,4 +207,5 @@ def main():
     else:
         print("Error: Need one argument")
 
-main()
+if __name__ == '__main__':
+    main()
