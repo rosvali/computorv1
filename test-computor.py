@@ -15,6 +15,7 @@ class test_fraction(unittest.TestCase):
     def test_fraction_can_convert(self):
         self.assertEqual(computor.fraction(1.5), "3/2", "Should be 3/2")
         self.assertEqual(computor.fraction(2.5), "5/2", "Should be 5/2")
+        self.assertEqual(computor.fraction(3.5), "7/2", "Should be 7/2")
         self.assertEqual(computor.fraction(-3.43), "-343/100", "Should be -343/100")
         self.assertEqual(computor.fraction(-1.12), "-28/25", "Should be -28/25")
         self.assertEqual(computor.fraction(-13.65), "-273/20", "Should be -273/20")
@@ -36,6 +37,14 @@ class Testmyabs(unittest.TestCase):
         self.assertEqual(computor.myabs(-106), 106, "Should be 106")
         self.assertEqual(computor.myabs(-1.23), 1.23, "Should be 1.23")
         self.assertEqual(computor.myabs(4.34), 4.34, "Should be 4.34")
+
+# swap the value between two variable
+class Testswap(unittest.TestCase):
+    def test_swap(self):
+        self.assertEqual(computor.swap("1", "2"), ("2", "1"), "Should be swap")
+        self.assertEqual(computor.swap(1, 2), (2, 1), "Should be swap")
+        self.assertEqual(computor.swap(1, "2"), ("2", 1), "Should be swap")
+        self.assertEqual(computor.swap("3 * x + 5", "2 * x^2"), ("2 * x^2", "3 * x + 5"), "Should be swap")
 
 if __name__ == '__main__':
     unittest.main()

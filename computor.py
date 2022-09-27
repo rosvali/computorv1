@@ -10,7 +10,6 @@ def fraction(dec):
     rest = int(str(dec).split(".")[0])
     div = num
 
-    print(num, denom, rest)
     if denom >= 1000:
         return(str(dec))
     while (div > 0):
@@ -28,11 +27,11 @@ def myabs(nb):
     else:
         return(nb)
 
-def swap_equation(lequation, requation):
-    tmp = lequation
-    lequation = requation
-    requation = tmp
-    return(lequation, requation)
+def swap(a, b):
+    tmp = a
+    a = b
+    b = tmp
+    return(a, b)
 
 def print_equation(equation):
     i = get_degree(equation)
@@ -72,7 +71,7 @@ def print_solution(solution):
 def reduced_form(lequation, requation):
     i = 0
     if len(lequation) < len(requation):
-        lequation, requation = swap_equation(lequation, requation)
+        lequation, requation = swap(lequation, requation)
     print("<=>", end = " ")
     print_equation(lequation)
     print("=", end = " ")
