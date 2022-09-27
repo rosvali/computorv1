@@ -10,14 +10,17 @@ def fraction(dec):
     rest = int(str(dec).split(".")[0])
     div = num
 
-    if denom > 1000:
-        print(dec)
-        return()
+    print(num, denom, rest)
+    if denom >= 1000:
+        return(str(dec))
     while (div > 0):
         if (num % div == 0 and denom % div == 0):
             break
         div -= 1
-    print(f"{int((num + rest * denom) / div)}/{int(denom / div)}")
+    if rest < 0:
+        return(f"-{int((num - rest * denom) / div)}/{int(denom / div)}")
+    else:
+        return(f"{int((num + rest * denom) / div)}/{int(denom / div)}")
 
 def myabs(nb):
     if nb < 0:
@@ -64,7 +67,7 @@ def print_solution(solution):
     elif solution.is_integer():
         print(int(solution))
     else:
-        fraction(solution)
+        print(fraction(solution))
 
 def reduced_form(lequation, requation):
     i = 0
