@@ -1,6 +1,7 @@
 import unittest
 import computor
 import math
+import re
 
 # mysqrt return the square root of a positif number
 class Testmysqrt(unittest.TestCase):
@@ -45,6 +46,23 @@ class Testswap(unittest.TestCase):
         self.assertEqual(computor.swap(1, 2), (2, 1), "Should be swap")
         self.assertEqual(computor.swap(1, "2"), ("2", 1), "Should be swap")
         self.assertEqual(computor.swap("3 * x + 5", "2 * x^2"), ("2 * x^2", "3 * x + 5"), "Should be swap")
+
+# list_equation take the reduced equation and return an array of coeff indexed by power
+class Testlist_equation(unittest.TestCase):
+    def test_list_equation(self):
+        self.assertEqual(computor.list_equation(re.split(r"(\+|-)", "2 * X + 1")), [1, 2], "Should be [1, 2]")
+        self.assertEqual(computor.list_equation(re.split(r"(\+|-)", "X + 5 * X^3 + 4 * x^2")), [0, 1, 4, 5], "Should be [0, 1, 4, 5]")
+        self.assertEqual(computor.list_equation(re.split(r"(\+|-)", "X^3")), [0, 0, 0, 1], "Should be [0, 0, 0, 1]")
+        self.assertEqual(computor.list_equation(re.split(r"(\+|-)", "X + 3 * x - 2.2 * x^2")), [0 , 4, -2.2], "Should be [0, 4, -2.2]")
+
+# class Testparsing_arg(unitttest.TestCase):
+    # def test_parsing_arg(self):
+
+# class Testget_degree(unitttest.TestCase):
+    # def test_get_degree(self):
+
+# class Testcalc_deta(unitttest.TestCase):
+    # def test_calc_deta(self):
 
 if __name__ == '__main__':
     unittest.main()

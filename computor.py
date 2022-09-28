@@ -118,7 +118,7 @@ def list_equation(side_equation):
                 index_coeff[int(power)] += float(coeff)
             else:
                 while len(index_coeff) < int(power):
-                    index_coeff.insert(len(index_coeff) - 1, 0)
+                    index_coeff.insert(len(index_coeff), 0)
                 index_coeff.insert(int(power), float(coeff))
         i += 1
     return(index_coeff)
